@@ -9,7 +9,7 @@ A resilient web-based system that uploads very large ZIP files in small chunks, 
 ## **Overview**
 
 Uploading very large files often fails due to unreliable networks, server restarts, or memory constraints.
-This project implements a fault-tolerant upload pipeline using chunked uploads, database-backed distributed state, and streaming I/O to ensure uploads can resume safely without ever loading the full file into memory.
+This project implements a fault-tolerant upload pipeline using chunked uploads, database-backed distributed state, and streaming I/O to ensure uploads can resume safely without ever loading the full file into memory. The system is designed to behave correctly under partial failures, retries, and duplicate requests.
 
 ---
 
@@ -36,13 +36,20 @@ This project implements a fault-tolerant upload pipeline using chunked uploads, 
 * Global progress bar and per-chunk status grid
 * Streaming file writes (no full file in memory)
 * SHA-256 checksum generation for integrity verification
-* ZIP inspection using streaming (no extraction)
+* ZIP header inspection using streaming (no extraction)
 * Periodic cleanup of abandoned uploads
+---
+
+## File Integrity
+
+- After all chunks are successfully received, the backend assembles the file using streaming I/O.
+- A streaming SHA-256 checksum is computed on the assembled file.
+- The checksum guarantees file integrity before the upload is marked as COMPLETED.
 
 ---
 
 
-### 🧩 System Architecture
+### System Architecture
 
 ```mermaid
 graph TD
@@ -100,7 +107,7 @@ Retry failed chunks
         ↓
 All chunks received?
         ↓
-YES → Merge → Hash → ZIP Peek
+YES → Stream Merge → SHA-256 Hash → ZIP Peek
         ↓
 Mark upload COMPLETED
 ```
@@ -112,7 +119,7 @@ Mark upload COMPLETED
 ```
 Upload in progress
         ↓
-Network fails ❌
+Network fails 
         ↓
 State saved in DB
         ↓
@@ -123,6 +130,12 @@ Frontend fetches uploaded chunks
 Upload resumes from last chunk
 ```
 ---
+## Pause & Resume Logic
+
+- Before uploading, frontend performs a handshake to fetch already uploaded chunk indexes.
+- Only missing chunks are queued for upload.
+- Upload state is persisted in the database, enabling exact resume after refresh or failure.
+---
 
 ## **Project Structure**
 
@@ -130,7 +143,8 @@ Upload resumes from last chunk
 fault-tolerant-chunked-file-uploader/
 │── frontend/               # React UI
 │── backend/                # Node.js server
-│── docker-compose.yml      # Container setup (optional)
+│── docker-compose.yml      # Container setup
+│── assets/                 # Screenshots
 │── README.md               # Documentation
 ```
 
@@ -153,7 +167,7 @@ fault-tolerant-chunked-file-uploader/
 ### **Setup Steps**
 
 ```bash
-git clone <your-repo-url>
+git clone <https://github.com/Kritvi0208/Fault-Tolerant-Chunked-File-Uploader>
 cd fault-tolerant-chunked-file-uploader
 ```
 
@@ -196,10 +210,39 @@ Backend runs on http://localhost:3000
 
 ---
 
-## **Demo**
 
-🎥 *Add demo video link here*
-(Shows upload → network disconnect → resume → completion)
+## **Demonstration Video**
+
+[Watch Demo Video](https://drive.google.com/file/d/19mcUIf2-9g4glaMlSc06aKZUp8M-DiPn/view)
+
+It demonstrates:
+- Chunked upload of a large ZIP file
+- Manual network disconnection during upload
+- Page refresh and automatic resume from last successful chunk
+- Successful completion with integrity verification
 
 ---
+## **Screenshots**
+
+### 1. Upload Initiated
+File selected and chunked upload initialized with handshake.
+
+![Upload Initiated](assets/initiate-upload.png)  
+
+
+### 2. Upload In Progress
+Chunks uploading concurrently with live speed, ETA, and per-chunk status grid.
+
+![Upload In Progress](assets/upload-in-progress.png)  
+
+
+### 3. Upload Completed
+All chunks received, file merged successfully, and upload verified.
+
+![Upload Completed](assets/complete-upload.png)  
+
+
+---
+
+
 
