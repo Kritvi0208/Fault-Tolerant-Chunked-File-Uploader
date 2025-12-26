@@ -1,0 +1,79 @@
+body {
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+.app {
+  max-width: 900px;
+  margin: auto;
+  padding: 24px;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+button {
+  background: #6366f1;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+}
+
+.progress-bar {
+  height: 10px;
+  background: #1e293b;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+
+.progress-bar > div {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #22d3ee);
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+  gap: 6px;
+}
+
+.cell {
+  padding: 8px;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 11px;
+}
+
+.PENDING { background: #334155; }
+.UPLOADING { background: #f59e0b; }
+.DONE { background: #22c55e; }
+.ERROR { background: #ef4444; }
+
+
+
+
+
+/* .app { font-family: sans-serif; padding: 20px; }
+.progress { margin: 10px 0; }
+.grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 5px; }
+.cell { padding: 8px; text-align: center; border-radius: 4px; font-size: 12px; }
+.PENDING { background: #ddd; }
+.UPLOADING { background: orange; }
+.DONE { background: #4caf50; color: white; } */
