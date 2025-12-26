@@ -156,6 +156,39 @@ fault-tolerant-chunked-file-uploader/
 
 ---
 
+
+## **Demonstration Video**
+
+[Watch Demo Video](https://drive.google.com/file/d/19mcUIf2-9g4glaMlSc06aKZUp8M-DiPn/view)
+
+It demonstrates:
+- Chunked upload of a large ZIP file
+- Manual network disconnection during upload
+- Page refresh and automatic resume from last successful chunk
+- Successful completion with integrity verification
+
+---
+## **Screenshots**
+
+### 1. Upload Initiated
+File selected and chunked upload initialized with handshake.
+
+![Upload Initiated](assets/initiate-upload.png)  
+
+
+### 2. Upload In Progress
+Chunks uploading concurrently with live speed, ETA, and per-chunk status grid.
+
+![Upload In Progress](assets/upload-in-progress.png)  
+
+
+### 3. Upload Completed
+All chunks received, file merged successfully, and upload verified.
+
+![Upload Completed](assets/complete-upload.png)  
+
+---
+
 ## **Installation**
 
 ### **Prerequisites**
@@ -202,47 +235,13 @@ Backend runs on http://localhost:3000
 
 ## **Future Enhancements**
 
-* MySQL/PostgreSQL implementation
-* Cloud object storage (S3/GCS)
-* User authentication
-* Download support
-* React-based dashboard
+* Improve UI/UX with a cleaner upload dashboard, clearer failure states, and better progress visualizations
+* Add explicit pause, resume, and cancel controls for upload sessions
+* Introduce relational database support (MySQL/PostgreSQL) with transactional guarantees
+* Enable pluggable storage (e.g., S3/GCS) while preserving streaming uploads
 
 ---
 
-
-## **Demonstration Video**
-
-[Watch Demo Video](https://drive.google.com/file/d/19mcUIf2-9g4glaMlSc06aKZUp8M-DiPn/view)
-
-It demonstrates:
-- Chunked upload of a large ZIP file
-- Manual network disconnection during upload
-- Page refresh and automatic resume from last successful chunk
-- Successful completion with integrity verification
-
----
-## **Screenshots**
-
-### 1. Upload Initiated
-File selected and chunked upload initialized with handshake.
-
-![Upload Initiated](assets/initiate-upload.png)  
-
-
-### 2. Upload In Progress
-Chunks uploading concurrently with live speed, ETA, and per-chunk status grid.
-
-![Upload In Progress](assets/upload-in-progress.png)  
-
-
-### 3. Upload Completed
-All chunks received, file merged successfully, and upload verified.
-
-![Upload Completed](assets/complete-upload.png)  
-
-
----
 
 
 
